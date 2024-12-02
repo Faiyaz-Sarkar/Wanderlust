@@ -1,0 +1,83 @@
+<% layout("layouts/boilerplate.ejs") %>
+<body>
+  <div class="titleOfNew">
+    <h3>Edit</h3>
+    <p>Hey! edit you listing</p>
+  </div>
+    <form novalidate class="needs-validation" method="post" action="/listings/<%= singleData._id %>?_method=PUT">
+      <!-- Title -->
+      <div class="mb-3 mt-3">
+        <label for="inputTitle" class="form-label">Title</label> <br />
+        <input
+        required
+        value="<%= singleData.title %>"
+          type="text"
+          name="title"
+          class="form-control"
+          id="inputTitle"
+        />
+      </div>
+        <!-- Description -->
+      <div class="mb-3">
+        <label for="inputDescription" class="form-label">Description</label>
+        <br />
+        <textarea
+        required
+          type="text"
+          name="description"
+          class="form-control"
+          id="inputDescription"
+          
+        ><%= singleData.description %></textarea>
+      </div>
+      <br />
+      <!-- Image -->
+      <div class="mb-3">
+        <label for="inputImage" class="form-label">Image Link</label> <br />
+        <input type="text" value="<%= singleData.image.url %>" required class="form-control" id="inputImage" name="image">
+      </div>
+      <br />
+      <!-- Price -->
+      <div class="mb-3">
+        <label for="inputPrice" class="form-label">Price</label> <br />
+        <input
+        required
+          type="number"
+          name="price"
+          class="form-control"
+          id="inputPrice"
+          value="<%= singleData.price %>"
+        />
+      </div>
+      <br>
+      <!-- Location -->
+      <div class="mb-3">
+        <label for="inputLocation" class="form-label">Location</label> <br />
+        <input
+        required
+          type="text"
+          name="location"
+          class="form-control"
+          id="inputLocation"
+          value="<%= singleData.location %>"
+        />
+      </div>
+      <br />
+      <!-- Country -->
+      <div class="mb-3">
+        <label for="inputCountry" class="form-label">Country</label> <br />
+        <input
+        required
+          type="text"
+          name="country"
+          class="form-control"
+          id="inputCountry"
+          value="<%= singleData.country %>"
+        />
+      </div>
+      <br />
+      <button type="submit" class="btn btn-primary mb-3">Update</button>
+
+    </form>
+</body>
+</html>

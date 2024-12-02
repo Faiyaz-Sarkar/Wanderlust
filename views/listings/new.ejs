@@ -1,0 +1,79 @@
+<% layout('layouts/boilerplate.ejs') %>
+    <div class="titleOfNew">
+      <h3>Create New Listing</h3>
+      <p>Have a nice trip!</p>
+    </div>
+
+    <form novalidate method="post" enctype="multipart/form-data" action="/listings" class="needs-validation">
+      <!-- Title -->
+      <div class="mb-3 mt-3">
+        <label for="inputTitle" class="form-label">Title</label> <br />
+        <input
+        required
+          type="text"
+          name="listing[title]"
+          class="form-control"
+          id="inputTitle"
+          
+        />
+      </div>
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="inputDescription" class="form-label">Description</label>
+        <br />
+        <textarea
+        required
+          type="text"
+          name="listing[description]"
+          class="form-control"
+          id="inputDescription"
+        >
+        </textarea>
+      </div>
+      <!-- Image -->
+      <div class="mb-3">
+        <label for="inputImage" class="form-label">Upload Image</label> <br />
+        <input
+          type="file"
+          name="listing[image]"
+          class="form-control"
+          id="inputImage"
+        />
+      </div>
+      <!-- Price -->
+      <div class="mb-3">
+        <label for="inputPrice" class="form-label">Price</label> <br />
+        <input
+        required
+          type="number"
+          name="listing[price]"
+          class="form-control"
+          id="inputPrice"
+        />
+      </div>
+      <!-- Location -->
+      <div class="mb-3">
+        <label for="inputLocation" class="form-label">Location</label> <br />
+        <input
+        required
+          type="text"
+          name="listing[location]"
+          class="form-control"
+          id="inputLocation"
+        />
+      </div>
+      <!-- Country -->
+      <div class="mb-3">
+        <label for="inputCountry" class="form-label">Country</label> <br />
+        <input
+        required
+          type="text"
+          name="listing[country]"
+          class="form-control"
+          id="inputCountry"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">Submit</button>
+    </form>
+  </body>
+</html>

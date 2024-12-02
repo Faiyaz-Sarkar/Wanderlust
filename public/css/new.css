@@ -1,0 +1,28 @@
+input {
+  width: 500px !important;
+  height: 60px !important;
+}
+label {
+  font-size: 20px !important;
+}
+body {
+  font-family: Roboto !important;
+}
+.titleOfNew {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center !important;
+  background: rgb(10, 10, 10);
+  background-position: center;
+  border-radius: 8px;
+  text-align: center !important;
+  color: white;
+}
+.titleOfNew h3,
+.titleOfNew p {
+  margin: 0 !important;
+  padding: 0 !important;
+  text-shadow: 2px 2px 5px black !important;
+}

@@ -1,0 +1,42 @@
+.navbar-brand i {
+  color: red !important;
+}
+.navbar {
+  background-color: white;
+}
+.navbar-nav a {
+  color: #383838 !important;
+  text-transform: uppercase;
+}
+.navbar-primary {
+  display: flex;
+  justify-content: space-between;
+}
+.navbar-brand {
+  color: #383838 !important;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 160px;
+}
+.navbar-brand i {
+  font-size: 48px;
+  margin-right: 10px;
+}
+.navbar-nav {
+  margin-left: auto;
+}
+@media screen and (min-width: 1200px) {
+  .navbar-nav {
+    font-size: 18px;
+    column-gap: 15px;
+    font-weight: 600;
+
+    color: white !important;
+  }
+  .navbar-brand {
+    font-size: 23px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
