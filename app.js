@@ -11,12 +11,14 @@ const path = require("path");
 const session = require("express-session");
 const listingsRouter = require("./routes/listings.js");
 const reviewsRouter = require("./routes/reviews.js");
+const testRouter = require("./routes/test.js");
 const authenticateRouter = require("./routes/users.js");
 const methodOverride = require("method-override");
 const User = require("./Models/user.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-(ejsMate = require("ejs-mate")), app.engine("ejs", ejsMate);
+const ejsMate = require("ejs-mate");
+app.engine("ejs", ejsMate); // Setting up EJS engine
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
@@ -36,8 +38,8 @@ app.listen(3000, (req, res) => {
 });
 
 // ejs
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views")); // Base directory for views
+app.set("view engine", "ejs"); // Template engine
 
 // cookie parse
 app.use(cookieParser("secret"));
@@ -82,9 +84,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", authenticateRouter);
-app.get("/test", (req, res, next) => {
-  throw new ExpressError("500", "testing error occur");
-});
+app.use("/test", testRouter);
 
 // Page not found error
 app.all("*", (req, res, next) => {
@@ -95,8 +95,15 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
   const { status = 500, message = "something were wrong", name } = err;
   if (err) {
-    console.log(err);
-    res.status(status).send(message);
+    if ((err.name = "Page Not Found")) {
+      console.log("Page Not Found / Nested folder does not support at views");
+      res.status(status).send(message);
+    } else {
+      console.log(
+        `Error name : ${name}, Message : ${message}, Error Stack : ${err.stack}`
+      );
+      res.status(status).send(message);
+    }
   }
 });
 // if (process.env.NODE_ENV != "production") {
