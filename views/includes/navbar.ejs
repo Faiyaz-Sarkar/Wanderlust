@@ -20,11 +20,11 @@
         <a class="nav-link active" href="/listings">Listings</a>
         <a class="nav-link active" href="/listings/new">New</a>
         <% if (!currUser) { %>
-        <a class="nav-link active" href="/authenticate/signup">Sign up</a>
-        <a class="nav-link active" href="/authenticate/login">Login</a>
+        <a class="nav-link active" href="/signup">Sign up</a>
+        <a class="nav-link active" href="/login">Logins</a>
 
         <% } %> <% if (currUser) { %>
-        <a class="nav-link active" href="/authenticate/logout">Log out</a>
+        <a class="nav-link active" href="/logout">Log out</a>
 
         <% } %>
       </div>

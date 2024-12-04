@@ -5,7 +5,7 @@ const express = require("express");
 var cookieParser = require("cookie-parser");
 let flash = require("connect-flash");
 const mongoose = require("mongoose");
-const ExpressError = require("./utils/ExpressError.js");
+const ExpressError = require("./utils/ExpressError");
 const app = express();
 const path = require("path");
 const session = require("express-session");
@@ -81,7 +81,10 @@ app.use((req, res, next) => {
 // Routes
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
-app.use("/authenticate", authenticateRouter);
+app.use("/", authenticateRouter);
+app.get("/test", (req, res, next) => {
+  throw new ExpressError("500", "testing error occur");
+});
 
 // Page not found error
 app.all("*", (req, res, next) => {
@@ -90,10 +93,10 @@ app.all("*", (req, res, next) => {
 
 // Error middleware
 app.use((err, req, res, next) => {
-  let { status = 500, message = "something were wrong", name } = err;
+  const { status = 500, message = "something were wrong", name } = err;
   if (err) {
-    res.status(status).send(message);
     console.log(err);
+    res.status(status).send(message);
   }
 });
 // if (process.env.NODE_ENV != "production") {

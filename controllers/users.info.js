@@ -24,7 +24,7 @@ module.exports.newUser = async (req, res, next) => {
   } catch (err) {
     req.flash("error", "user is already exist");
     console.log(err);
-    res.redirect("/authenticate/signup");
+    res.redirect("/signup");
   }
 };
 

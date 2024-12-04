@@ -1,7 +1,7 @@
 const Listing = require("./Models/listing");
 const Review = require("./Models/review");
 const { listingSchema, reviewSchema } = require("./schema");
-const ExpressErorr = require("./utils/ExpressError");
+const ExpressError = require("./utils/ExpressError");
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -9,7 +9,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     console.log(req.originalUrl);
     console.log("isLoggedIN fuction has excuted");
     req.flash("error", "you must login");
-    return res.redirect("/authenticate/login");
+    return res.redirect("/login");
   }
   next();
 };
@@ -48,7 +48,7 @@ module.exports.validateListingSchema = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
   if (error) {
     console.log(error);
-    throw new ExpressErorr(400, error.details[0].message);
+    throw new ExpressError(400, error.details[0].message);
   } else {
     next();
   }
@@ -57,7 +57,7 @@ module.exports.validateListingSchema = (req, res, next) => {
 module.exports.validateReviewSchema = (req, res, next) => {
   let { error } = reviewSchema.validate(req.body);
   if (error) {
-    throw new ExpressErorr(400, error.details[0].message);
+    throw new ExpressError(400, error.details[0].message);
   } else {
     next();
   }
