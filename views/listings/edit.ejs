@@ -4,13 +4,13 @@
     <h3>Edit</h3>
     <p>Hey! edit you listing</p>
   </div>
-    <form novalidate class="needs-validation" method="post" action="/listings/<%= singleData._id %>?_method=PUT">
+    <form enctype="multipart/form-data" novalidate class="needs-validation" method="post" action="/listings/<%= listing._id %>?_method=PUT">
       <!-- Title -->
       <div class="mb-3 mt-3">
         <label for="inputTitle" class="form-label">Title</label> <br />
         <input
         required
-        value="<%= singleData.title %>"
+        value="<%= listing.title %>"
           type="text"
           name="title"
           class="form-control"
@@ -28,13 +28,14 @@
           class="form-control"
           id="inputDescription"
           
-        ><%= singleData.description %></textarea>
+        ><%= listing.description %></textarea>
       </div>
       <br />
       <!-- Image -->
       <div class="mb-3">
-        <label for="inputImage" class="form-label">Image Link</label> <br />
-        <input type="text" value="<%= singleData.image.url %>" required class="form-control" id="inputImage" name="image">
+        <img src="<%= orginalUrl %>" alt="img">
+        <label for="inputImage" class="form-label"> Image </label> <br />
+        <input type="file" value="<%= listing.image.url %>" required class="form-control" id="inputImage" name="image">
       </div>
       <br />
       <!-- Price -->
@@ -46,7 +47,7 @@
           name="price"
           class="form-control"
           id="inputPrice"
-          value="<%= singleData.price %>"
+          value="<%= listing.price %>"
         />
       </div>
       <br>
@@ -59,7 +60,7 @@
           name="location"
           class="form-control"
           id="inputLocation"
-          value="<%= singleData.location %>"
+          value="<%= listing.location %>"
         />
       </div>
       <br />
@@ -72,7 +73,7 @@
           name="country"
           class="form-control"
           id="inputCountry"
-          value="<%= singleData.country %>"
+          value="<%= listing.country %>"
         />
       </div>
       <br />

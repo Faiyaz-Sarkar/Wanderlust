@@ -1,8 +1,26 @@
 const Listing = require("../Models/listing");
 
+const forwardGeocode = async (place) => {
+  const apiKey = process.env.MAPTILER_API_KEY; // Replace with your MapTiler API key
+  const url = `https://api.maptiler.com/geocoding/${place}.json?key=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.features && data.features.length > 0) {
+      const coordinates = data.features[0].geometry; // [longitude, latitude]
+      return coordinates;
+    } else {
+      console.log("No results found.");
+    }
+  } catch (error) {
+    console.error("Error fetching geocoding data:", error);
+  }
+};
+
 module.exports.index = async (req, res) => {
   let data = await Listing.find({});
-  res.render("listings/index.ejs", { data });
+  res.render("listings/index", { data });
 };
 
 module.exports.renderListingForm = (req, res) => {
@@ -12,28 +30,34 @@ module.exports.renderListingForm = (req, res) => {
 module.exports.addListing = async (req, res, next) => {
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
+  const { path, filename, orginalname } = req.file;
+  newListing.image.url = path;
+  newListing.image.filename = filename;
+  const geometry = await forwardGeocode(req.body.listing.location);
+  newListing.geometry = geometry;
   await newListing.save();
-
+  console.log(newListing);
   req.flash("success", "new listing has added");
   res.redirect("/listings");
 };
 
 module.exports.showListing = async (req, res, next) => {
   let { id } = req.params;
-  let singleData = await Listing.findById(id);
-  if (!singleData) {
+  let listing = await Listing.findById(id)
+    .populate({ path: "reviews", populate: "author" })
+    .populate("owner");
+  if (!listing) {
     req.flash("error", "listing does not exist");
     res.redirect("/listings");
   }
-  let listing = await Listing.findOne({
+  await Listing.findOne({
     _id: id,
-  })
-    .populate({ path: "reviews", populate: "author" })
-    .populate("owner");
+  });
+
   let reviews = listing.reviews;
   let owner = listing.owner;
   res.render("listings/show.ejs", {
-    singleData,
+    listing,
     reviews,
     owner,
   });
@@ -41,25 +65,31 @@ module.exports.showListing = async (req, res, next) => {
 
 module.exports.editListing = async (req, res) => {
   let { id } = req.params;
-  let singleData = await Listing.findById(id);
-  if (!singleData) {
+  let listing = await Listing.findById(id);
+  let orginalUrl = listing.image.url;
+  orginalUrl = orginalUrl.replace(
+    "/upload",
+    "/upload/c_thumb,g_face,h_200,w_200/r_max/f_auto"
+  );
+  if (!listing) {
     req.flash("error", "listing doesn't exist");
     res.redirect("/listings");
   }
-  res.render("listings/edit.ejs", { singleData });
+  res.render("listings/edit.ejs", { listing, orginalUrl });
 };
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
   let { title, description, image, price, location, country } = req.body;
 
-  await Listing.findByIdAndUpdate(
+  let listing = await Listing.findByIdAndUpdate(
     id,
     {
       title: title,
       description: description,
       image: {
         url: image,
+        filename: "image",
       },
       price: price,
       location: location,
@@ -67,12 +97,23 @@ module.exports.updateListing = async (req, res) => {
     },
     { runValidators: true, new: true }
   );
-  console.log(req.body);
+  console.log(listing.location, req.body.location);
+  if (listing.location !== req.body.location) {
+    const geometry = await forwardGeocode(listing.location);
+    listing.geometry = geometry;
+    await listing.save();
+  }
+  if (typeof req.file !== "undefined") {
+    let { path, filename } = req.file;
+    listing.image = { url: path, filename: filename };
+    await listing.save();
+  }
   res.redirect(`/listings/${id}`);
 };
 
 module.exports.deleteListing = async (req, res, next) => {
   let { id } = req.params;
+  console.log("delete");
   await Listing.findByIdAndDelete(id);
   res.redirect(`/listings`);
 };
