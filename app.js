@@ -11,7 +11,6 @@ const path = require("path");
 const session = require("express-session");
 const listingsRouter = require("./routes/listings.js");
 const reviewsRouter = require("./routes/reviews.js");
-const testRouter = require("./routes/test.js");
 const authenticateRouter = require("./routes/users.js");
 const methodOverride = require("method-override");
 const User = require("./Models/user.js");
@@ -84,10 +83,6 @@ app.use((req, res, next) => {
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", authenticateRouter);
-app.use("/test", testRouter);
-
-// const msg = { coordinate: [12, 12] };
-// console.log(typeof JSON.stringify(msg.coordinate));
 
 // Page not found error
 app.all("*", (req, res, next) => {

@@ -1,46 +1,42 @@
 <% layout('layouts/boilerplate.ejs') %>
-    <div class="titleOfNew">
-      <h3>Hey! Welcome to sign up page</h3>
-    </div>
+<div class="titleOfNew">
+  <h3>Hey! Welcome to sign up page</h3>
+</div>
 
-    <form novalidate method="post" action="/signup" class="needs-validation">
-      <!-- email -->
-      <div class="mb-3 mt-3">
-        <label for="inputEmail" class="form-label">Email</label> <br />
-        <input
-        required
-          type="email"
-          name="email"
-          class="form-control"
-          id="inputEmail"
-          
-        />
-      </div>
-      <!-- username -->
-      <div class="mb-3">
-        <label for="inputUsername" class="form-label">Description</label>
-        <br />
-        <input
-        required
-          type="text"
-          name="username"
-          class="form-control"
-          id="inputUsername"
-        >
-        </input>
-      </div>
-      <!-- password -->
-      <div class="mb-3">
-        <label for="inputPassword" class="form-label">Password</label> <br />
-        <input
-          type="password"
-          name="password"
-          class="form-control"
-          id="inputPassword"
-        />
-      </div>
+<form novalidate method="post" action="/signup" class="needs-validation">
+  <!-- email -->
+  <div class="mb-3 mt-3">
+    <label for="inputEmail" class="form-label">Email</label> <br />
+    <input
+      required
+      type="email"
+      name="email"
+      class="form-control"
+      id="inputEmail"
+    />
+  </div>
+  <!-- username -->
+  <div class="mb-3">
+    <label for="inputUsername" class="form-label">Description</label>
+    <br />
+    <input
+      required
+      type="text"
+      name="username"
+      class="form-control"
+      id="inputUsername"
+    />
+  </div>
+  <!-- password -->
+  <div class="mb-3">
+    <label for="inputPassword" class="form-label">Password</label> <br />
+    <input
+      type="password"
+      name="password"
+      class="form-control"
+      id="inputPassword"
+    />
+  </div>
 
-      <button type="submit" class="btn btn-primary mb-3">Submit</button>
-    </form>
-  </body>
-</html>
+  <button type="submit" class="btn btn-primary mb-3">Submit</button>
+</form>

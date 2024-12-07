@@ -16,6 +16,10 @@ const initDB = async () => {
     return {
       ...obj,
       owner: "6745e75abf8ae40eb966b079",
+      geometry: {
+        type: "Point",
+        coordinates: [91.86, 24.9048],
+      },
     };
   });
   let listingData = await Listing.insertMany(initData.data);

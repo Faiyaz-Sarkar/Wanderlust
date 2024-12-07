@@ -1,4 +1,4 @@
-const Listing = require("../Models/listing");
+const Listing = require("../Models/listing.js");
 
 const forwardGeocode = async (place) => {
   const apiKey = process.env.MAPTILER_API_KEY; // Replace with your MapTiler API key
@@ -80,15 +80,23 @@ module.exports.editListing = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
-  let { title, description, image, price, location, country } = req.body;
-
-  let listing = await Listing.findByIdAndUpdate(
+  let {
+    title,
+    description,
+    image: imgUrl,
+    price,
+    location,
+    country,
+  } = req.body;
+  console.log(imgUrl);
+  let currListing = await Listing.findById(id);
+  let newListing = await Listing.findByIdAndUpdate(
     id,
     {
       title: title,
       description: description,
       image: {
-        url: image,
+        url: currListing.image.url,
         filename: "image",
       },
       price: price,
@@ -97,16 +105,15 @@ module.exports.updateListing = async (req, res) => {
     },
     { runValidators: true, new: true }
   );
-  console.log(listing.location, req.body.location);
-  if (listing.location !== req.body.location) {
-    const geometry = await forwardGeocode(listing.location);
-    listing.geometry = geometry;
-    await listing.save();
+  if (newListing.location !== currListing.location) {
+    const geometry = await forwardGeocode(newListing.location);
+    newListing.geometry = geometry;
+    await newListing.save();
   }
   if (typeof req.file !== "undefined") {
     let { path, filename } = req.file;
-    listing.image = { url: path, filename: filename };
-    await listing.save();
+    newListing.image = { url: path, filename: filename };
+    await newListing.save();
   }
   res.redirect(`/listings/${id}`);
 };
