@@ -5,7 +5,7 @@ const express = require("express");
 var cookieParser = require("cookie-parser");
 let flash = require("connect-flash");
 const mongoose = require("mongoose");
-const ExpressError = require("./utils/ExpressError");
+const ExpressError = require("./utils/ExpressError.js");
 const app = express();
 const path = require("path");
 const session = require("express-session");
@@ -80,9 +80,9 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use("/", authenticateRouter);
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
-app.use("/", authenticateRouter);
 
 // Page not found error
 app.all("*", (req, res, next) => {
@@ -93,8 +93,10 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
   const { status = 500, message = "something were wrong", name } = err;
 
-  console.log(
-    `Error name : ${name}, Message : ${message}, Error Stack : ${err.stack}`
-  );
-  res.send(message);
+  if (err) {
+    console.log(
+      `Error name : ${name}, Message : ${message}, Error Stack : ${err.stack}`
+    );
+    res.send(message);
+  }
 });

@@ -20,7 +20,7 @@ const forwardGeocode = async (place) => {
 
 module.exports.index = async (req, res) => {
   let data = await Listing.find({});
-  res.render("listings/index", { data });
+  res.render("listings/index.ejs", { data });
 };
 
 module.exports.renderListingForm = (req, res) => {
