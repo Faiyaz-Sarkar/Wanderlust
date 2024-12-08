@@ -45,7 +45,6 @@
       <input
         type="file"
         value="<%= listing.image.url %>"
-        required
         class="form-control"
         id="inputImage"
         name="image"
@@ -75,6 +74,19 @@
         class="form-control"
         id="inputLocation"
         value="<%= listing.location %>"
+      />
+    </div>
+    <br />
+    <!-- Category -->
+    <div class="mb-3">
+      <label for="inputLocation" class="form-label">Category</label> <br />
+      <input
+        required
+        type="text"
+        name="category"
+        class="form-control"
+        id="inputCategory"
+        value="<%= listing.category %>"
       />
     </div>
     <br />

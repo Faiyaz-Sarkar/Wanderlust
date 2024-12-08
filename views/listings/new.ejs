@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate.ejs') %>
 
-<div>
+<div class="newListing">
   <div class="titleOfNew">
     <h3>Create New Listing</h3>
     <p>Have a nice trip!</p>
@@ -69,6 +69,26 @@
         id="inputLocation"
       />
     </div>
+    <!-- category -->
+    <div class="form-group">
+      <label for="category" class="form-label">Category</label>
+      <select id="category" name="listing[category]" class="form-control">
+        <option value="" disabled selected>Select a category</option>
+        <option value="countryside">Countryside</option>
+        <option value="bed">Beds</option>
+        <option value="island">Islands</option>
+        <option value="urban">Urban</option>
+        <option value="mountain">Mountains</option>
+        <option value="beach">Beaches</option>
+        <option value="cabin">Cabins</option>
+        <option value="lakeside">Lakeside</option>
+        <option value="historical">Historical</option>
+        <option value="desert">Deserts</option>
+        <option value="luxury">Luxury</option>
+        <option value="adventure">Adventure</option>
+      </select>
+    </div>
+
     <!-- Country -->
     <div class="mb-3">
       <label for="inputCountry" class="form-label">Country</label> <br />

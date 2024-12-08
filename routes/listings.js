@@ -24,6 +24,8 @@ router
     wrapAsync(listingController.addListing)
   );
 
+// search route
+router.post("/search", listingController.index);
 // new
 router.get(
   "/new",

@@ -20,6 +20,7 @@ const initDB = async () => {
         type: "Point",
         coordinates: [91.86, 24.9048],
       },
+      category: "countryside",
     };
   });
   let listingData = await Listing.insertMany(initData.data);

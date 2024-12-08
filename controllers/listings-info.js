@@ -2,7 +2,10 @@ const Listing = require("../Models/listing.js");
 
 const forwardGeocode = async (place) => {
   const apiKey = process.env.MAPTILER_API_KEY; // Replace with your MapTiler API key
-  const url = `https://api.maptiler.com/geocoding/${place}.json?key=${apiKey}`;
+  // const url = `https://api.maptiler.com/geocoding/${place}.json?key=${apiKey}`;
+  const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(
+    place
+  )}.json?key=${apiKey}`;
 
   try {
     const response = await fetch(url);
@@ -19,7 +22,22 @@ const forwardGeocode = async (place) => {
 };
 
 module.exports.index = async (req, res) => {
-  let data = await Listing.find({});
+  console.log(req.user);
+  const { country } = req.body;
+  const { category } = req.query; // Dynamically get category from query parameters
+  let data;
+
+  if (category) {
+    data = await Listing.find({ category }); // Fetch listings matching the category
+  } else if (country) {
+    data = await Listing.find({ country }); // Fetch listings matching the category
+  } else {
+    data = await Listing.find({}); // Fetch all listings if no category is specified
+  }
+
+  // console.log(`Category: ${category || "All"}`);
+  // console.log(`Number of listings: ${data.length}`);
+
   res.render("listings/index.ejs", { data });
 };
 
@@ -28,6 +46,7 @@ module.exports.renderListingForm = (req, res) => {
 };
 
 module.exports.addListing = async (req, res, next) => {
+  console.log(req.body.listing);
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
   const { path, filename, orginalname } = req.file;
@@ -86,6 +105,7 @@ module.exports.updateListing = async (req, res) => {
     image: imgUrl,
     price,
     location,
+    category,
     country,
   } = req.body;
   console.log(imgUrl);
@@ -101,6 +121,7 @@ module.exports.updateListing = async (req, res) => {
       },
       price: price,
       location: location,
+      category: category,
       country: country,
     },
     { runValidators: true, new: true }

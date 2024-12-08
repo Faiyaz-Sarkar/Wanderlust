@@ -18,6 +18,7 @@
   justify-content: space-around;
   align-items: center;
   width: 160px;
+  padding-bottom: 0px;
 }
 .navbar-brand i {
   font-size: 48px;
@@ -39,4 +40,64 @@
     font-weight: 700;
     text-transform: uppercase;
   }
+}
+.listings {
+  min-height: 65vh !important;
+}
+.filterTax {
+  width: 100% !important;
+  display: flex;
+  justify-content: space-between;
+}
+.form-check-input {
+  width: 20px !important;
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  width: 85% !important;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 0.5rem;
+  width: 80px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.filter a {
+  text-decoration: none;
+  color: #333;
+}
+
+.filter i {
+  font-size: 2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.filter h4 {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.filter:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.searchArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }

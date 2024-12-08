@@ -1,31 +1,132 @@
 <% layout('/layouts/boilerplate') %>
 
-<body>
-  <div class="container mx-auto mt-3">
-    <ul
-      class="d-flex row-gap-3 justify-content-center justify-content-md-between flex-wrap card-parent"
-    >
-      <% for(let element of data) { %>
-      <li class="">
-        <a href="/listings/<%= element.id %>">
-          <div class="card">
-            <img
-              src="<%= element.image.url %>"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-img-overlay"></div>
-            <div class="card-body">
-              <h5 class="card-title">
-                <a href="/listings/<%= element.id %>"><%= element.title %></a>
-              </h5>
-              <p class="card-text"><%= element.description %></p>
-            </div>
-          </div>
+<div class="container mx-auto mt-1">
+  <div class="filterTax">
+    <div class="filters d-flex flex-wrap gap-3 justify-content-left mb-4">
+      <div class="filter text-center">
+        <a href="/listings?category=countryside">
+          <i class="fa-solid fa-tree"></i>
+          <h4>Countryside</h4>
         </a>
-      </li>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=bed">
+          <i class="fa-solid fa-bed"></i>
+          <h4>Beds</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=island">
+          <i class="fa-solid fa-water"></i>
+          <h4>Islands</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=urban">
+          <i class="fa-solid fa-city"></i>
+          <h4>Urban</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=mountain">
+          <i class="fa-solid fa-mountain"></i>
+          <h4>Mountains</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=beach">
+          <i class="fa-solid fa-umbrella-beach"></i>
+          <h4>Beaches</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=cabin">
+          <i class="fa-solid fa-house-chimney"></i>
+          <h4>Cabins</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=lakeside">
+          <i class="fa-solid fa-water-ladder"></i>
+          <h4>Lakeside</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=historical">
+          <i class="fa-solid fa-landmark"></i>
+          <h4>Historical</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=desert">
+          <i class="fa-solid fa-cactus"></i>
+          <h4>Deserts</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=luxury">
+          <i class="fa-solid fa-crown"></i>
+          <h4>Luxury</h4>
+        </a>
+      </div>
+      <div class="filter text-center">
+        <a href="/listings?category=adventure">
+          <i class="fa-solid fa-hiking"></i>
+          <h4>Adventure</h4>
+        </a>
+      </div>
+    </div>
 
-      <% } %>
-    </ul>
+    <div class="form-check form-switch" style="width: 14% !important">
+      <input
+        style="
+          width: 40px !important ;
+          height: 20px !important ;
+          margin-right: 10px !important;
+        "
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="flexSwitchCheckDefault"
+      />
+      <label class="form-check-label" for="flexSwitchCheckDefault"
+        >Checkout Tax</label
+      >
+    </div>
   </div>
-</body>
+
+  <ul
+    class="d-flex listings row-gap-3 justify-content-center justify-content-md-between flex-wrap card-parent"
+  >
+    <% for(let element of data) { %>
+    <li class="">
+      <a href="/listings/<%= element.id %>">
+        <div class="card">
+          <img src="<%= element.image.url %>" class="card-img-top" alt="..." />
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="/listings/<%= element.id %>"><%= element.title %></a>
+            </h5>
+            <p class="card-text"><%= element.location%></p>
+            <i class="tax" style="display: none"> Tax rate : 20tk </i>
+          </div>
+        </div>
+      </a>
+    </li>
+    <% } %>
+  </ul>
+</div>
+<script>
+  let toggle = document.getElementById("flexSwitchCheckDefault");
+  let taxes = document.querySelectorAll(".tax");
+  taxes.forEach((tax) => {
+    toggle.addEventListener("click", (e) => {
+      if (e.target.checked === true) {
+        tax.style.display = "block";
+      } else {
+        tax.style.display = "none";
+      }
+    });
+  });
+</script>
