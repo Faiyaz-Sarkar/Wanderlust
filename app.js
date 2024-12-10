@@ -90,7 +90,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-// app.use("/", authenticateRouter);
+app.use("/", authenticateRouter);
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 
