@@ -2,12 +2,11 @@ const express = require("express");
 const User = require("../Models/user");
 const wrapAsync = require("../utils/wrapAsync");
 const passport = require("passport");
+const listingController = require("../controllers/users.info");
 const router = express.Router();
 router
   .route("/signup")
-  .get((req, res) => {
-    res.render("listings/signup");
-  })
+  .get(listingController.renderSignupForm)
   .post(
     wrapAsync(async (req, res, next) => {
       const { username, email, password } = req.body;
@@ -40,8 +39,10 @@ router
       res.redirect("/listings");
     }
   );
-router.get("/logout", (req, res) => {
-  req.logout();
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    return next(err);
+  });
   res.redirect("/listings");
 });
 module.exports = router;
