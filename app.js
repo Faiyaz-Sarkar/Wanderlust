@@ -26,7 +26,7 @@ const mongodbLocalUrl = "mongodb://localhost:27017/wanderlust";
 // Database
 async function main() {
   try {
-    await mongoose.connect(process.env.mongodbAtlasUrl, {
+    await mongoose.connect(mongodbLocalUrl, {
       connectTimeoutMS: 30000, // 30-second timeout for the connection
     });
     console.log("Database server started");
@@ -50,7 +50,7 @@ app.set("view engine", "ejs"); // Template engine
 app.use(cookieParser("squirrel999"));
 
 const store = MongoStore.create({
-  mongoUrl: process.env.mongodbAtlasUrl,
+  mongoUrl: mongodbLocalUrl,
   crypto: {
     secret: "squirrel999",
   },
@@ -66,7 +66,7 @@ const sessionOptions = {
 
 // Express-session
 app.use(session(sessionOptions));
-
+app.use(passport.authenticate("session"));
 // Flash
 app.use(flash());
 
